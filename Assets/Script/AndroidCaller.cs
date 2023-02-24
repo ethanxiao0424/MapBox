@@ -1,5 +1,7 @@
 #if UNITY_ANDROID
 //basic imports.
+using Mapbox.Unity.Map;
+using Mapbox.Utils;
 using UnityEngine;
 
 public class AndroidCaller : MonoBehaviour
@@ -22,6 +24,11 @@ public class AndroidCaller : MonoBehaviour
         CallNativePlugin();
         Debug.Log(geofencing[0].id);
     }
+
+    private void Update()
+    {
+        GetLocation();
+    }
     //method that calls our native plugin.
     public void CallNativePlugin()
     {
@@ -31,8 +38,6 @@ public class AndroidCaller : MonoBehaviour
         // Retrieve the UnityPlayerActivity object ( a.k.a. the current context )
 
        unityActivity = unityPlayerClass.GetStatic<AndroidJavaObject>("currentActivity");
-
-
 
         // Setup the parameters we want to send to our native plugin.    設置我們要發送到我們的原生插件的參數
         parameters = new object[4];
@@ -55,6 +60,37 @@ public class AndroidCaller : MonoBehaviour
         }
         bridge.Call("GeoFenceCompleted");
     }
+
+
+    [SerializeField]Camera _mainCam;
+    [SerializeField] AbstractMap _mapRef;
+    void GetLocation()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePosScreen = Input.mousePosition;
+            mousePosScreen.z = _mainCam.transform.localPosition.y;
+            Vector3 location = _mainCam.ScreenToWorldPoint(mousePosScreen);
+            Vector2d coordinate = _mapRef.WorldToGeoPosition(location);
+            Debug.Log(coordinate.x + ", " + coordinate.y);
+        }
+    }
+
+    public void AddGeoFence(string id,double latitude,double longitude,float radius,int loiteringDelay)
+    {
+        bridge.Call("addGeoFence", id, latitude, longitude, radius, loiteringDelay);
+        bridge.Call("GeoFenceCompleted");
+    }
+
+    public void RemoveGeoFence(string[] ids)
+    {
+        bridge.Call("removeGeoFences",ids);
+    }
+
+    public void RemoveAllGeoFence()
+    {
+        bridge.Call("removeAllGeoFences");
+    }
 }
 
 [System.Serializable]
@@ -67,8 +103,8 @@ public class Geofencing
     [Tooltip("緯度")]
     public double longitude;
     [Tooltip("半徑100-300")]
-    public float radius = 300;
-    [Tooltip("")]
-    public int loiteringDelay = 3000;
+    public float radius;
+    [Tooltip("ms")]
+    public int loiteringDelay;
 }
 #endif

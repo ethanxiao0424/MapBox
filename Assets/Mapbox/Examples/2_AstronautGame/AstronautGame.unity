@@ -1161,7 +1161,7 @@ MonoBehaviour:
       locationPrefabList:
       - coreOptions:
           sourceId: 
-          isActive: 0
+          isActive: 1
           sublayerName: New Location
           geometryType: 0
           layerName: poi_label
@@ -1451,18 +1451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c81241f2037a344dbf307e7ef6edabf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnSpeed: 5
-  player: {fileID: 0}
-  xOffset: 10
-  yOffset: 10
-  zOffset: 10
-  compass: {fileID: 0}
-  cam: {fileID: 234181019}
-  character: {fileID: 1176362814}
-  MouseZoomSpeed: 10
-  TouchZoomSpeed: 0.1
-  ZoomMinBound: 10
-  ZoomMaxBound: 27
 --- !u!114 &234181022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1486,7 +1474,7 @@ MonoBehaviour:
   MouseZoomSpeed: 10
   TouchZoomSpeed: 0.1
   ZoomMinBound: 3
-  ZoomMaxBound: 10
+  ZoomMaxBound: 30
 --- !u!1 &289230304
 GameObject:
   m_ObjectHideFlags: 0
@@ -3008,6 +2996,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 940516726}
+  - component: {fileID: 940516727}
   m_Layer: 0
   m_Name: AndroidCaller
   m_TagString: Untagged
@@ -3030,6 +3019,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &940516727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940516725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2055a0aadb77b4eab3dc974fe932f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notificationContentTitle: geofencingTrigger
+  notificationContentText: ContentText
+  notificationDescription: Description
+  geofencing:
+  - id: Company
+    latitude: 25.06079
+    longitude: 121.45415
+    radius: 300
+    loiteringDelay: 1000
+  _mainCam: {fileID: 234181019}
+  _mapRef: {fileID: 159634025}
 --- !u!21 &942337738
 Material:
   serializedVersion: 8
