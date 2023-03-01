@@ -72,7 +72,7 @@ public class AndroidCaller : MonoBehaviour
             mousePosScreen.z = _mainCam.transform.localPosition.y;
             Vector3 location = _mainCam.ScreenToWorldPoint(mousePosScreen);
             Vector2d coordinate = _mapRef.WorldToGeoPosition(location);
-            Debug.Log(coordinate.x + ", " + coordinate.y);
+            //Debug.Log(coordinate.x + ", " + coordinate.y);
         }
     }
 
