@@ -1,12 +1,15 @@
 package com.ethan.mygeofencing;
 
 //import needed packages / classes.
+
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
@@ -17,8 +20,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
 
 public class Bridge extends Application
 {
