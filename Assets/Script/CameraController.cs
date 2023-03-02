@@ -6,28 +6,12 @@ public class CameraController : MonoBehaviour
 {
     public float turnSpeed = 0.1f;
     public GameObject player;
-    private Transform playerTransform;
-    private Vector2 playerPos;
     private Vector3 offset;
     public float xOffset;
     public float yOffset;
     public float zOffset;
 
     public GameObject compass;
-    Vector3 screenCenter;
-
-    void Start()
-    {
-        playerTransform = player.transform;
-        offset = new Vector3(playerTransform.position.x + xOffset, playerTransform.position.y + yOffset, playerTransform.position.z + zOffset);
-    }
-    private void Update()
-    {
-        CamControl();
-        transform.position = playerTransform.position + offset;
-        transform.LookAt(playerTransform.position);
-    }
-
     [Header("CameraSettings")]
     [SerializeField] Camera cam;
     [SerializeField] Transform character;
@@ -36,8 +20,18 @@ public class CameraController : MonoBehaviour
     [SerializeField] float ZoomMinBound = 3f;
     [SerializeField] float ZoomMaxBound = 10f;
 
-    Vector2 startPos;
-    Vector2 endPos;
+
+    void Start()
+    {
+        offset = new Vector3(player.transform.position.x + xOffset, player.transform.position.y + yOffset, player.transform.position.z + zOffset);
+    }
+
+    private void Update()
+    {
+        CamControl();
+        //transform.position = playerTransform.position + offset;
+        transform.LookAt(player.transform.position);
+    }
 
     void CamControl()
     {
@@ -48,20 +42,15 @@ public class CameraController : MonoBehaviour
             switch (touch.phase)
             {
                 case TouchPhase.Began:
-                    startPos = touch.position;
+
                     break;
                 case TouchPhase.Moved:
-                    endPos = touch.position - startPos;
-                    float angle = Mathf.Atan2(endPos.y-startPos.y, endPos.x-startPos.x) * Mathf.Rad2Deg;
-                    Debug.Log(angle);
-                    //playerPos = Camera.main.WorldToScreenPoint(player.transform.position);
-                    //Vector3 dir = touch.position - playerPos;
-                    //float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                    //float speed = angle * turnSpeed;
-                    float speed = angle * turnSpeed;
-
-                    offset = Quaternion.AngleAxis(speed, Vector3.up) * offset;
-
+                    Vector2 playerPos = Camera.main.WorldToScreenPoint(player.transform.position);
+                    Vector2 dir = touch.position - playerPos;
+                    float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                    Quaternion q = Quaternion.AngleAxis(angle, Vector3.up);
+                    transform.position = player.transform.position + q * offset;
+                    //transform.rotation = q;
                     //compass.transform.Rotate(Vector3.forward, speed);
                     break;
                 case TouchPhase.Stationary:

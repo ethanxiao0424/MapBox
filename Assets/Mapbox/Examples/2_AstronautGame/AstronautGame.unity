@@ -1461,7 +1461,7 @@ MonoBehaviour:
   MouseZoomSpeed: 10
   TouchZoomSpeed: 0.1
   ZoomMinBound: 3
-  ZoomMaxBound: 30
+  ZoomMaxBound: 8
 --- !u!1 &289230304
 GameObject:
   m_ObjectHideFlags: 0
